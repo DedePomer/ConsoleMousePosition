@@ -24,7 +24,7 @@ namespace ConsoleMousePosition
                     _x = point.X;
                     _y = point.Y;
                 }
-
+                Thread.Sleep(250);
             }
             Console.CursorVisible = true;
         }
@@ -36,9 +36,15 @@ namespace ConsoleMousePosition
             if (GetCursorPos(out point) && point.X != _x && point.Y != _y)
             {
                 Console.WriteLine("({0},{1})", point.X, point.Y);
-
             }
             return point;
+        }
+
+
+        static bool PositionChek() /*можно попробовать virtual screen*/
+        {
+
+
         }
     }
 }
