@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Drawing;
+using System.Runtime.InteropServices;
+
 
 namespace ConsoleMousePosition
 {
@@ -7,12 +9,22 @@ namespace ConsoleMousePosition
         [DllImport("user32.dll")]
         static extern bool GetCursorPos(out POINT lpPoint);
 
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        public static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
+        public enum DeviceCap
+        {
+            VERTRES = 10,
+            DESKTOPVERTRES = 117
+        }
+
+
         static int _x, _y;
         
 
         static void Main(string[] args)
         {
             List<string> Points = new List<string>();
+            float sc = GetScalingFactor();
 
             Console.CursorVisible = false;
             while (Points.Count != 20)
@@ -40,11 +52,26 @@ namespace ConsoleMousePosition
             return point;
         }
 
-
-        static bool PositionChek() /*можно попробовать virtual screen*/
+        static float GetScalingFactor()
         {
+            using Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+            IntPtr desktop = g.GetHdc();
+            int LogicalScreenHeight = GetDeviceCaps(desktop, (int)DeviceCap.VERTRES);
+            int PhysicalScreenHeight = GetDeviceCaps(desktop, (int)DeviceCap.DESKTOPVERTRES);
 
+            g.ReleaseHdc(desktop);
 
+            float ScreenScalingFactor = (float)PhysicalScreenHeight / (float)LogicalScreenHeight;
+
+            return ScreenScalingFactor; // 1.25 = 125%
         }
+
+
+        //static bool PositionChek() /*можно попробовать virtual screen*/
+        //{
+        //    string screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth.ToString();
+
+        //    return true;
+        //}
     }
 }
