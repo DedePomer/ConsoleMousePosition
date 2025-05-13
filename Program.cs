@@ -13,18 +13,29 @@ namespace ConsoleMousePosition
         public static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
         public enum DeviceCap
         {
+            HORZRES = 8,
             VERTRES = 10,
             DESKTOPVERTRES = 117
         }
 
 
-        static int _x, _y;
-        
+        static double _x, _y;
+        static int _fistZone = 2;
+        static int _secindtZone = 2;
+        static int _thirdZone = 20;
+        static int _fourthZone = 20;
+        static int _fifthZone = 10;
+        static int _sixthZone = 10;
+
 
         static void Main(string[] args)
         {
             List<string> Points = new List<string>();
-            float sc = GetScalingFactor();
+            //float sc = GetScalingFactor();
+            //IsAvaiblePosition(new POINT {X=1,Y=1});
+
+
+
 
             Console.CursorVisible = false;
             while (Points.Count != 20)
@@ -52,6 +63,17 @@ namespace ConsoleMousePosition
             return point;
         }
 
+        static Resolution GetScreenResolution() /*не проверял с несколькими экранами*/
+        {
+            Graphics graphics = Graphics.FromHwnd(IntPtr.Zero);
+            IntPtr desktop = graphics.GetHdc();
+
+            Resolution screenResolution = new Resolution();
+            screenResolution.Widh = GetDeviceCaps(desktop, (int)DeviceCap.HORZRES);
+            screenResolution.Height = GetDeviceCaps(desktop, (int)DeviceCap.VERTRES);
+            return screenResolution;
+        }
+
         static float GetScalingFactor()
         {
             using Graphics g = Graphics.FromHwnd(IntPtr.Zero);
@@ -68,9 +90,14 @@ namespace ConsoleMousePosition
         }
 
 
-        //static bool PositionChek() /*можно попробовать virtual screen*/
+
+        //static bool IsAvaiblePosition(POINT point) 
         //{
-        //    string screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth.ToString();
+        //    Resolution screenResolution = GetScreenResolution();
+        //    Zone firstZone = new Zone(
+        //        new POINT 
+        //        {X= screenResolution.Widh * 0.25});
+
 
         //    return true;
         //}
