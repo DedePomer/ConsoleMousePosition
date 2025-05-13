@@ -62,6 +62,7 @@ namespace ConsoleMousePosition
             g.ReleaseHdc(desktop);
 
             float ScreenScalingFactor = (float)PhysicalScreenHeight / (float)LogicalScreenHeight;
+            g.Dispose();
 
             return ScreenScalingFactor; // 1.25 = 125%
         }
