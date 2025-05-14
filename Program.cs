@@ -19,7 +19,7 @@ namespace ConsoleMousePosition
         }
 
 
-        static double _x, _y;
+        static int _x, _y;
         static int _fistZone = 2;
         static int _secondZone = 2;
         static int _thirdZone = 20;
@@ -49,7 +49,7 @@ namespace ConsoleMousePosition
                     _x = point.X;
                     _y = point.Y;
                 }
-                Thread.Sleep(250);
+                Thread.Sleep(250); //возможно не спит поток
             }
             Console.CursorVisible = true;
         }
