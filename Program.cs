@@ -21,7 +21,7 @@ namespace ConsoleMousePosition
 
         static double _x, _y;
         static int _fistZone = 2;
-        static int _secindtZone = 2;
+        static int _secondZone = 2;
         static int _thirdZone = 20;
         static int _fourthZone = 20;
         static int _fifthZone = 10;
@@ -41,7 +41,9 @@ namespace ConsoleMousePosition
             while (Points.Count != 20)
             {
                 POINT point = ShowMousePosition();
-                if (point.X != _x && point.Y != _y)
+                Dot2D dot = new Dot2D()
+                { X = point.X, Y = point.Y };
+                if (point.X != _x && point.Y != _y && IsAvaiblePosition(dot))
                 {
                     Points.Add(point.X + "" + point.Y);
                     _x = point.X;
@@ -130,9 +132,43 @@ namespace ConsoleMousePosition
                 new Dot2D
                 { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0 });
 
+            if (IsDotInZone(dot,firstZone) && _fistZone > 0)
+            {
+                _fistZone--;
+                return true;
+            }
 
+            if (IsDotInZone(dot, secondZone) && _secondZone > 0)
+            {
+                _secondZone--;
+                return true;
+            }
 
-            return true;
+            if (IsDotInZone(dot, thirdZone) && _thirdZone > 0)
+            {
+                _thirdZone--;
+                return true;
+            }
+
+            if (IsDotInZone(dot, fourthZone) && _fourthZone > 0)
+            {
+                _fourthZone--;
+                return true;
+            }
+
+            if (IsDotInZone(dot, fifthZone) && _fifthZone > 0)
+            {
+                _fifthZone--;
+                return true;
+            }
+
+            if (IsDotInZone(dot, sixthZone) && _sixthZone > 0)
+            {
+                _sixthZone--;
+                return true;
+            }
+
+            return false;
         }
 
         static bool IsDotInZone(Dot2D dot, Zone zone)
