@@ -8,10 +8,10 @@ namespace ConsoleMousePosition
 {
     public class Zone
     {
-        public POINT firstPoint;
-        public POINT secondPoint;
+        public Dot2D firstPoint;
+        public Dot2D secondPoint;
 
-        public Zone(POINT firstPoint, POINT secondPoint) 
+        public Zone(Dot2D firstPoint, Dot2D secondPoint) 
         {
             this.firstPoint = firstPoint;
             this.secondPoint = secondPoint; 

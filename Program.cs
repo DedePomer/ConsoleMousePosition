@@ -91,15 +91,57 @@ namespace ConsoleMousePosition
 
 
 
-        //static bool IsAvaiblePosition(POINT point) 
-        //{
-        //    Resolution screenResolution = GetScreenResolution();
-        //    Zone firstZone = new Zone(
-        //        new POINT 
-        //        {X= screenResolution.Widh * 0.25});
+        static bool IsAvaiblePosition(Dot2D dot)
+        {
+            Resolution screenResolution = GetScreenResolution();
+            Zone firstZone = new Zone(
+                new Dot2D
+                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0.67 },
+                new Dot2D
+                {X = screenResolution.Widh * 0.5, Y = screenResolution.Height * 0.33 } );
+
+            Zone secondZone = new Zone(
+                new Dot2D
+                { X = screenResolution.Widh * 0.5, Y = screenResolution.Height * 0.67 },
+                new Dot2D
+                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0.33 });
+
+            Zone thirdZone = new Zone(
+                new Dot2D
+                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 1 },
+                new Dot2D
+                { X = screenResolution.Widh * 1, Y = screenResolution.Height * 0 });
+
+            Zone fourthZone = new Zone(
+                new Dot2D
+                { X = screenResolution.Widh * 0, Y = screenResolution.Height * 1 },
+                new Dot2D
+                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0 });
+
+            Zone fifthZone = new Zone(
+                new Dot2D
+                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 1 },
+                new Dot2D
+                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0.67 });
+
+            Zone sixthZone = new Zone(
+                new Dot2D
+                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0.33 },
+                new Dot2D
+                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0 });
 
 
-        //    return true;
-        //}
+
+            return true;
+        }
+
+        static bool IsDotInZone(Dot2D dot, Zone zone)
+        {
+            if ((dot.X > zone.firstPoint.X && dot.Y < zone.firstPoint.Y) && (dot.X < zone.secondPoint.X && dot.Y > zone.secondPoint.Y))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
