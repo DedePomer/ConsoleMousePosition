@@ -20,6 +20,7 @@ namespace ConsoleMousePosition
 
 
         static int _x, _y;
+
         static int _fistZone = 2;
         static int _secondZone = 2;
         static int _thirdZone = 20;
@@ -40,11 +41,11 @@ namespace ConsoleMousePosition
             Console.CursorVisible = false;
             while (Points.Count != 20)
             {
-                POINT point = ShowMousePosition();
-                Dot2D dot = new Dot2D()
-                { X = point.X, Y = point.Y };
-                if (point.X != _x && point.Y != _y && IsAvaiblePosition(dot))
+                POINT point;
+                if (GetCursorPos(out point) && point.X != _x && point.Y != _y 
+                    && IsAvaiblePosition(new Dot2D() { X = point.X, Y = point.Y }))
                 {
+                    Console.WriteLine("({0},{1})", point.X, point.Y);
                     Points.Add(point.X + "" + point.Y);
                     _x = point.X;
                     _y = point.Y;
@@ -55,15 +56,16 @@ namespace ConsoleMousePosition
         }
 
 
-        static POINT ShowMousePosition()
-        {
-            POINT point;
-            if (GetCursorPos(out point) && point.X != _x && point.Y != _y)
-            {
-                Console.WriteLine("({0},{1})", point.X, point.Y);
-            }
-            return point;
-        }
+        //static POINT ShowMousePosition()
+        //{
+        //    POINT point;
+        //    if (GetCursorPos(out point) && point.X != _x 
+        //        && point.Y != _y /*&& IsAvaiblePosition(new Dot2D() { X = point.X, Y = point.Y })*/)
+        //    {
+        //        Console.WriteLine("({0},{1})", point.X, point.Y);
+        //    }
+        //    return point;
+        //}
 
         static Resolution GetScreenResolution() /*не проверял с несколькими экранами*/
         {
@@ -96,84 +98,84 @@ namespace ConsoleMousePosition
         static bool IsAvaiblePosition(Dot2D dot)
         {
             Resolution screenResolution = GetScreenResolution();
-            Zone firstZone = new Zone(
-                new Dot2D
-                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0.67 },
-                new Dot2D
-                {X = screenResolution.Widh * 0.5, Y = screenResolution.Height * 0.33 } );
+            //Zone firstZone = new Zone(
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0.33 },
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.5, Y = screenResolution.Height * 0.67 });
 
-            Zone secondZone = new Zone(
-                new Dot2D
-                { X = screenResolution.Widh * 0.5, Y = screenResolution.Height * 0.67 },
-                new Dot2D
-                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0.33 });
+            //Zone secondZone = new Zone(
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.5, Y = screenResolution.Height * 0.33 },
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0.67 });
 
-            Zone thirdZone = new Zone(
-                new Dot2D
-                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 1 },
-                new Dot2D
-                { X = screenResolution.Widh * 1, Y = screenResolution.Height * 0 });
+            //Zone thirdZone = new Zone(
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0 },
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 1, Y = screenResolution.Height * 1 });
 
-            Zone fourthZone = new Zone(
-                new Dot2D
-                { X = screenResolution.Widh * 0, Y = screenResolution.Height * 1 },
-                new Dot2D
-                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0 });
+            //Zone fourthZone = new Zone(
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0, Y = screenResolution.Height * 0 },
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 1 });
 
-            Zone fifthZone = new Zone(
-                new Dot2D
-                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 1 },
-                new Dot2D
-                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0.67 });
+            //Zone fifthZone = new Zone(
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0 },
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0.33 });
 
-            Zone sixthZone = new Zone(
-                new Dot2D
-                { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0.33 },
-                new Dot2D
-                { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 0 });
+            //Zone sixthZone = new Zone(
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.25, Y = screenResolution.Height * 0.67 },
+            //    new Dot2D
+            //    { X = screenResolution.Widh * 0.75, Y = screenResolution.Height * 1 });
 
-            if (IsDotInZone(dot,firstZone) && _fistZone > 0)
-            {
-                _fistZone--;
-                return true;
-            }
+            //if (IsDotInZone(dot, firstZone) && _fistZone > 0)
+            //{
+            //    _fistZone--;
+            //    return true;
+            //}
 
-            if (IsDotInZone(dot, secondZone) && _secondZone > 0)
-            {
-                _secondZone--;
-                return true;
-            }
+            //if (IsDotInZone(dot, secondZone) && _secondZone > 0)
+            //{
+            //    _secondZone--;
+            //    return true;
+            //}
 
-            if (IsDotInZone(dot, thirdZone) && _thirdZone > 0)
-            {
-                _thirdZone--;
-                return true;
-            }
+            //if (IsDotInZone(dot, thirdZone) && _thirdZone > 0)
+            //{
+            //    _thirdZone--;
+            //    return true;
+            //}
 
-            if (IsDotInZone(dot, fourthZone) && _fourthZone > 0)
-            {
-                _fourthZone--;
-                return true;
-            }
+            //if (IsDotInZone(dot, fourthZone) && _fourthZone > 0)
+            //{
+            //    _fourthZone--;
+            //    return true;
+            //}
 
-            if (IsDotInZone(dot, fifthZone) && _fifthZone > 0)
-            {
-                _fifthZone--;
-                return true;
-            }
+            //if (IsDotInZone(dot, fifthZone) && _fifthZone > 0)
+            //{
+            //    _fifthZone--;
+            //    return true;
+            //}
 
-            if (IsDotInZone(dot, sixthZone) && _sixthZone > 0)
-            {
-                _sixthZone--;
-                return true;
-            }
+            //if (IsDotInZone(dot, sixthZone) && _sixthZone > 0)
+            //{
+            //    _sixthZone--;
+            //    return true;
+            //}
 
             return false;
         }
 
         static bool IsDotInZone(Dot2D dot, Zone zone)
         {
-            if ((dot.X > zone.firstPoint.X && dot.Y < zone.firstPoint.Y) && (dot.X < zone.secondPoint.X && dot.Y > zone.secondPoint.Y))
+            if ((dot.X > zone.firstPoint.X && dot.Y > zone.firstPoint.Y) && (dot.X < zone.secondPoint.X && dot.Y < zone.secondPoint.Y))
             {
                 return true;
             }
