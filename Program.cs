@@ -50,7 +50,7 @@ namespace ConsoleMousePosition
                     _x = point.X;
                     _y = point.Y;
                 }
-                Thread.Sleep(250); //возможно не спит поток
+                Thread.Sleep(500); //возможно не спит поток
             }
             Console.CursorVisible = true;
         }
